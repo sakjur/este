@@ -1,62 +1,41 @@
-<html>
-    <head>
-        <title>Paste {{ paste_id }}</title>
-        <link rel="stylesheet" type="text/css"
-            href="{{ url_for('static', filename='css/fira_code.css') }}" />
-        <link rel="stylesheet" type="text/css"
-            href="{{ url_for('static', filename='css/style.css') }}" />
-        <link rel="stylesheet" type="text/css"
-            href="{{ url_for('static', filename='css/pastie.css') }}" />
-    </head>
+{% extends "main.html" %}
 
-    <body>
-        <nav>
-            paste.mjuk.is
-        </nav>
-        <div id="content">
-            <div class="menu">
-                <a href="/raw/{{ paste_id }}">Raw file</a> |
-                <a href="#" id="remove_highlight">Without highlighting</a> |
-                <a href="#" id="add_highlight">With highlighting</a>
-            </div>
+{% block title %}
+Paste {{ paste.name }}
+{% endblock %}
 
-            <div class="code highlight">
-                <ol>
-                    <li><span class="ch">#!/usr/bin/env python3</span></li>
-                    <li><br /></li>
-                    <li><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span></li>
-                    <li><br /></li>
-                    <li><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span></li>
-                    <li><br /></li>
-                    <li><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span></li>
-                    <li><span class="k">def</span> <span class="nf">main</span><span class="p">():</span></li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="s1">&#39;Hello, world</span><span class="se">\n</span><span class="s1">&#39;</span></li>
-                    <li><br /></li>
-                    <li><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/p/&lt;paste_id&gt;&#39;</span><span class="p">)</span></li>
-                    <li><span class="k">def</span> <span class="nf">paste</span><span class="p">(</span><span class="n">paste_id</span><span class="p">):</span></li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;paste.html&#39;</span><span class="p">,</span> <span class="n">paste_id</span><span class="o">=</span><span class="n">paste_id</span><span class="p">)</span></li>
-                    <li><br /></li>
-                    <li><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span></li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></li>
-                </ol>
-            </div>
-        </div>
-        <script type="text/javascript">
-            document.getElementById('remove_highlight').onclick =
-                function() {
-                    var code_blocks = document.getElementsByClassName('code');
-                    for (var i = 0; i < code_blocks.length; i++) {
-                        code_blocks[i].classList.remove('highlight');
-                    }
-                }
+{% block content %}
+<div class="menu">
+    <a href="/raw/{{ paste.name }}">Raw file</a> |
+    <a href="#" id="remove_highlight">Without highlighting</a> |
+    <a href="#" id="add_highlight">With highlighting</a> |
+    Format: {{ paste.lang }} |
+    Size: {{ paste.size }} 
+</div>
 
-            document.getElementById('add_highlight').onclick =
-                function() {
-                    var code_blocks = document.getElementsByClassName('code');
-                    for (var i = 0; i < code_blocks.length; i++) {
-                        code_blocks[i].classList.add('highlight');
-                    }
-                }
-        </script>
-    </body>
-</html>
+<div class="code highlight">
+    <ol>
+        {{ paste.content|safe }}
+    </ol>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+document.getElementById('remove_highlight').onclick =
+function() {
+    var code_blocks = document.getElementsByClassName('code');
+    for (var i = 0; i < code_blocks.length; i++) {
+        code_blocks[i].classList.remove('highlight');
+    }
+}
+
+document.getElementById('add_highlight').onclick =
+function() {
+    var code_blocks = document.getElementsByClassName('code');
+    for (var i = 0; i < code_blocks.length; i++) {
+        code_blocks[i].classList.add('highlight');
+    }
+}
+</script>
+{% endblock %}
