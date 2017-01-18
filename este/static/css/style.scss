@@ -1,0 +1,61 @@
+$nav-background: #990066;
+
+body, html {
+    margin: 0;
+}
+
+nav {
+    position: fixed;
+    height: 1em;
+    padding: 1.0em 20px 1.0em 20px;
+    width: 200px;
+    background: $nav-background;
+    color: darken(white, 5%);
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 0 0 1em 1em;
+    z-index: 463165;
+    text-align: center;
+    font-family: 'Fira Code', monospace;
+
+    a {
+        color: lighten(blue, 47%);
+    }
+}
+
+#content {
+    margin-top: 70px;
+    position: absolute;
+    padding: 0 110px 2em 110px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 840px;
+
+    a {
+        color: white;
+    }
+    
+    .menu {
+        color: white;
+        padding: 5px 15px;
+        text-align: center;
+        background: lighten($nav-background, 10%);
+    }
+
+    .code {
+        font-family: 'Fira Code', monospace;
+        word-wrap: break-word;
+
+        li {
+            font-size: 12pt;
+
+            &:nth-child(odd) {
+                background: darken(white, 2%);
+            }
+            &:hover {
+                background: lighten($nav-background, 65%);
+            }
+        }
+    }
+}
+
