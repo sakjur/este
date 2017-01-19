@@ -2,11 +2,7 @@
     <head>
         <title>{% block title %}paste.mjuk.is{% endblock %}</title>
         <link rel="stylesheet" type="text/css"
-            href="{{ url_for('static', filename='css/fira_code.css') }}" />
-        <link rel="stylesheet" type="text/css"
             href="{{ url_for('static', filename='css/style.css') }}" />
-        <link rel="stylesheet" type="text/css"
-            href="{{ url_for('static', filename='css/pastie.css') }}" />
     </head>
 
     <body>
@@ -22,5 +18,9 @@
         {% block script %}
         {% endblock %}
 
+        <link rel="stylesheet" type="text/css"
+            href="{{ url_for('static', filename='css/pastie.css') }}" />
+        <link rel="stylesheet" type="text/css"
+            href="{{ url_for('static', filename='css/fira_code.css') }}" />
     </body>
 </html>
