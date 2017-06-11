@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
 from pygments import highlight
-from pygments.lexers import PythonLexer, ErlangLexer, TextLexer
+import pygments.lexers as lex
 from pygments.formatters import HtmlFormatter
+
+LEXERS = {
+    'erlang': lex.ErlangLexer,
+    'python': lex.PythonLexer,
+}
 
 def format_pasteline(line):
     if line == '':
@@ -12,8 +17,6 @@ def format_pasteline(line):
     for char in line:
         if char == ' ':
             init_space += 1
-        elif char == '\t':
-            init_space += 4
         else:
             break
 
@@ -21,14 +24,8 @@ def format_pasteline(line):
 
 
 def format_paste(raw, lang='plain'):
-    lexer = TextLexer()
-    if lang == 'python':
-        lexer = PythonLexer()
-    elif lang == 'erlang':
-        lexer = ErlangLexer()
+    lexer = LEXERS.get(lang, lex.TextLexer)(tabsize=4)
     data = highlight(raw, lexer, HtmlFormatter(nowrap=True))
-
     arr = map(format_pasteline, data.split('\n'))
-
-    return "".join(arr)
+    return "\n".join(arr)
 
